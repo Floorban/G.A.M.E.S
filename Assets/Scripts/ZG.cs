@@ -4,15 +4,11 @@ using UnityEngine;
 
 public class ZG : MonoBehaviour
 {
-    //public float rotateSpeed;
-    //public float turnSpeed;
-    //public float downAndUpSpeed;
+    public float downAndUpSpeed;
     public float speed;
     public GameObject mainCamera; // Reference to the main camera.
 
     private Rigidbody rb;
-
-    public RayGun rayGun;
 
     void Start()
     {
@@ -21,20 +17,18 @@ public class ZG : MonoBehaviour
 
     void Update()
     {
-        if (speed > 0)
-        {
-            speed = 5;
-        }
+        
 
         if (Input.GetButton("RightTrigger"))
         {
-            //rayGun.Painting = true;
-            
             Debug.Log("Yes!");
         }
-        //transform.Rotate(new Vector3(0, 0, -1) * rotateSpeed * Input.GetAxis("Roll") * Time.deltaTime);
-        //transform.Rotate(new Vector3(1, 0, 0) * downAndUpSpeed * Input.GetAxis("UpDown") * Time.deltaTime);
-        //transform.Rotate(new Vector3(0, 1, 0) * turnSpeed * Input.GetAxis("Horizontal") * Time.deltaTime);
+
+        float upDownInput = Input.GetAxis("UpDown");
+
+        Vector3 upDownForce = Vector3.up * upDownInput * downAndUpSpeed;
+
+        rb.AddForce(upDownForce * Time.deltaTime);
 
         // Check if a camera is assigned
         if (mainCamera != null)
